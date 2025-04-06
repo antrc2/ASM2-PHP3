@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('name',255);
-            $table->tinyInteger('status')->default(1)->nullable();
-            // $table->timestamps();
+        Schema::table('products', function (Blueprint $table) {
+            // tạo khóa ngoại
+            $table->foreignId("category_id")->change()->constrained();
         });
     }
 
@@ -24,6 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::table('products', function (Blueprint $table) {
+            // xóa khóa ngoại
+            $table->dropForeign("products_category_id_foregin");
+        });
     }
 };
