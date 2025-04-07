@@ -9,7 +9,15 @@
 <body>
     <header>
         <nav>
-            
+            <ul>
+                <?php 
+                    use App\Models\Category;
+                    $categories = Category::all();    
+                ?>
+                @foreach ($categories as $category)
+                <li><a href="/category/{{$category->id}}">{{$category->name}}</a></li>
+                @endforeach
+            </ul>
         </nav>
     </header>
     <main>@yield('main')</main>

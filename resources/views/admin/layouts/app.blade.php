@@ -15,7 +15,7 @@
                 <li><a href="/">Trang chủ</a></li>
                 <li><a href="/admin/dashboard">Trang quản trị</a></li>
                 <li><a href="/admin/categories">Quản lí danh mục</a></li>
-                <li><a href="/admin/products">Quản lí sản phẩn</a></li>
+                <li><a href="/admin/products">Quản lí sản phẩm</a></li>
             </ul>
         </nav>
     </header>
