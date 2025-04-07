@@ -11,7 +11,7 @@ class CategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,15 @@ class CategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "name"=>"required|string|max:255"
+        ];
+    }
+    public function messages()
+    {
+        return [
+            "name.required"=>"Tên danh mục không được để trống",
+            "name.string"=>"Tên danh mục phải là chữ",
+            "name.max"=>"Tên danh mục không được quá dài"
         ];
     }
 }
