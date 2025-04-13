@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email',255);
             $table->string('phone',13);
             $table->string('address');
+            $table->integer('role_id')->default(1);
             $table->tinyInteger('status')->default(1)->nullable();
             $table->timestamps();
         });

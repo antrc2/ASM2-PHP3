@@ -4,18 +4,28 @@
 @endsection
 
 @section('main')
-    <form action="/admin/categories/store" method="POST"> 
-    @csrf
-    @method("POST")
-    <div>
-        <label for="category">Tên danh mục</label>
-        <input type="text" name="name" id="category">
-        @error('name')
-        <div class="text-danger"> {{$message}} </div>
-        @enderror
+<div class="card">
+    <div class="card-header">
+        <h4>Thêm danh mục mới</h4>
     </div>
-    <div>
-        <button>Thêm</button>
+    <div class="card-body">
+        <form action="/admin/categories/store" method="POST"> 
+            @csrf
+            @method("POST")
+
+            <div class="mb-3">
+                <label for="category" class="form-label">Tên danh mục</label>
+                <input type="text" name="name" id="category" 
+                       class="form-control @error('name') is-invalid @enderror"
+                       placeholder="Nhập tên danh mục">
+
+                @error('name')
+                <div class="invalid-feedback"> {{$message}} </div>
+                @enderror
+            </div>
+
+            <button type="submit" class="btn btn-primary">Thêm</button>
+        </form>
     </div>
-    </form>
+</div>
 @endsection

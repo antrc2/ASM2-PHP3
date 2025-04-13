@@ -87,6 +87,19 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        
+        var_dump(Product::where("category_id",$id)->first() == NULL);
+        if (Product::where("category_id",$id)->first() == NULL){
+            Category::destroy($id);
+            return redirect("/admin/categories")->with("success","Xóa danh mục thành công");
+            
+            
+        } else {
+            Category::where('id', $id)->update(['status' => 0]);
+            return redirect("/admin/categories")->with("success","Xóa danh mục thành công");
+        }
+    }
+    public function undo(string $id){
+        Category::where('id',$id)->update(["status"=>1]);
+        return redirect("/admin/categories")->with("success","Hoàn tác danh mục thành công");
     }
 }

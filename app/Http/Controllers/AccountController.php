@@ -2,10 +2,48 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
 {
+    public function login(Request $request)
+    {
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            // Thực hiện xác thực thủ công
+            $validated = $request->validate([
+                'email' => 'required|email',
+                'password' => 'required|min:6',
+            ]);
+
+            if ($validated) {
+                $userInfo = Account::where('email', $request->email)->first();
+                if ($userInfo == NULL) {
+                    return redirect("/login")->with("error", "Không tìm thấy tài khoản");
+                } else {
+                    if (Hash::check($request->password, $userInfo->password)) {
+                        Auth::login($userInfo);
+                        return redirect("/")->with('success', 'Đăng nhập thành công');
+                    } else {
+                        return redirect("/login")->with("error", "Sai mật khẩu");
+                    }
+                }
+            }
+        } else {
+            if (Auth::user()){
+                return redirect("/")->with("error","Bạn đã đăng nhập rồi");
+            }
+            return view("account.login");
+        }
+    }
+    public function logout(Request $request)
+    {
+        Auth::logout(); // Đăng xuất người dùng
+
+        return redirect("/")->with("success","Đăng xuất thành công"); // Chuyển hướng về trang chủ
+    }
     /**
      * Display a listing of the resource.
      */
